@@ -1,13 +1,12 @@
-## Installation
+# RC Transaction Tracker - Fullstack App w/ User Login
 
-1. Clone repo
-2. run `npm install`
+I created a financial transaction tracker that takes in items you bought and gives you an easy database to add and delete things from all the while giving you an updated value on the current costs of the company.
 
-## Usage
+**Link to project:** Coming Soon!
 
-1. run `node server.js`
-2. Navigate to `localhost:8080`
+![alt tag](https://i.imgur.com/RWtNe3f.png)
+![alt tag](https://i.imgur.com/ZWDm2MB.png)
 
-## Credit
+## How It's Made:
 
-Modified from Scotch.io's auth tutorial
+**Tech used:** HTML5, CSS3, JavaScript, Node.js, EJS, MongoDB

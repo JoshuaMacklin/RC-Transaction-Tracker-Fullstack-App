@@ -8,12 +8,17 @@ module.exports = function(app, passport, db) {
   });
 
   // PROFILE SECTION =========================
+
   app.get('/profile', isLoggedIn, function(req, res) {
-    db.collection('messages').find().toArray((err, result) => {
+    db.collection('AccPay').find().toArray((err, result) => {
       if (err) return console.log(err)
-      res.render('profile.ejs', {
-        user: req.user,
-        messages: result
+      db.collection('AccRec').find().toArray((err, results) => {
+        if (err) return console.log(err)
+        res.render('profile.ejs', {
+          user: req.user,
+          AccPay: result,
+          AccRec: results
+        })
       })
     })
   });
@@ -25,8 +30,8 @@ module.exports = function(app, passport, db) {
   });
 
   // message board routes ===============================================================
-  app.post('/messages', (req, res) => {
-    db.collection('messages').save({
+  app.post('/AR', (req, res) => {
+    db.collection('AccRec').save({
       userID: req.body.userID,
       item: req.body.item,
       amount: req.body.amount
@@ -37,25 +42,41 @@ module.exports = function(app, passport, db) {
     })
   })
 
-  app.put('/messages', (req, res) => {
-    db.collection('messages').findOneAndUpdate({
-      _id: new mongodb.ObjectID(req.body.id)
-    }, {
-        $set: {
-          star: true
-        }
-      },(err, result) => {
+  app.post('/AP', (req, res) => {
+    db.collection('AccPay').save({
+      userID: req.body.userID,
+      item: req.body.item,
+      amount: req.body.amount
+    }, (err, result) => {
       if (err) return console.log(err)
       console.log('saved to database')
       res.redirect('/profile')
     })
   })
 
+  app.post('/AP', (req, res) => {
+    db.collection('total').save({
+      total: req.body.total
+    }, (err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to database')
+      res.redirect('/profile')
+    })
+  })
 
-  app.delete('/messages', (req, res) => {
+  app.delete('/AccPay', (req, res) => {
     var mongodb = require('mongodb')
-    // db.collection('messages').findOneAndDelete({name: req.body.name, item: req.body.item, amount: req.body.amount}, (err, result) => {
-    db.collection('messages').deleteOne({
+    db.collection('AccPay').deleteOne({
+      _id: new mongodb.ObjectID(req.body.id)
+    }, (err, result) => {
+      if (err) return res.send(500, err)
+      res.send('Message deleted!')
+    })
+  })
+
+  app.delete('/AccRec', (req, res) => {
+    var mongodb = require('mongodb')
+    db.collection('AccRec').deleteOne({
       _id: new mongodb.ObjectID(req.body.id)
     }, (err, result) => {
       if (err) return res.send(500, err)

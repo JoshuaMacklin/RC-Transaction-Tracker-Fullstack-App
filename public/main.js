@@ -3,9 +3,17 @@ var trash = document.getElementsByClassName("fa-trash");
 Array.from(trash).forEach(function(element) {
   element.addEventListener('click', function() {
     const id = this.parentNode.parentNode.childNodes[1].innerText
-    const money = this.parentNode.parentNode.childNodes[5].innerText
     console.log(id)
-    fetch('messages', {
+    fetch('AccPay', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'id': id,
+      })
+    })
+    fetch('AccRec', {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json'
@@ -18,3 +26,15 @@ Array.from(trash).forEach(function(element) {
     })
   });
 });
+
+function checkAP(){
+  if (document.getElementById("ap").checked = true){
+    document.getElementById("form").action = '/AP'
+  }
+}
+
+function checkAR(){
+  if (document.getElementById("ar").checked = true){
+    document.getElementById("form").action = '/AR'
+  }
+}

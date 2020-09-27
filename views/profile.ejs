@@ -5,40 +5,61 @@
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
 
     <div class="text-center">
-        <h1></span>Resilient Coders Transaction Tracker</h1>
+        <h1>Resilient Coders Transaction Tracker</h1>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
     <div class="row">
 
-          <% let money = messages.reduce((a,b)=>a+parseInt(b.amount),0) %>
+          <% let money = (AccRec.reduce((a,b)=>a+parseInt(b.amount),0) - AccPay.reduce((a,b)=>a+parseInt(b.amount),0)) %>
           <h2>Running Total | <span class="red">$<%= money %></span></h2>
+          <!-- total[0].total -->
 
-          <section class='right'>
-            <h3>Transaction History</h3>
+          <section class='right sideby'>
+            <h3>Accounts Payable</h3>
             <ul class="messages">
-            <% for(var i=0; i<messages.length; i++) {%>
+            <% for(var i=0; i<AccPay.length; i++) {%>
               <li class="message">
-                <span class="id"><%= messages[i]._id %></span>
-                <span><%= messages[i].item %></span> |
-                <span>$<%= messages[i].amount%></span>
+                <span class="id"><%= AccPay[i]._id %></span>
+                <span><%= AccPay[i].item %></span> |
+                <span>$<%= AccPay[i].amount%></span>
                 <span><i class="fa fa-trash" aria-hidden="true"></i></span>
               </li>
             <% } %>
             </ul>
           </section>
 
-          <section class='left'>
+          <section class='right sideby'>
+            <h3>Accounts Receivable</h3>
+            <ul class="messages">
+            <% for(var i=0; i<AccRec.length; i++) {%>
+              <li class="message">
+                <span class="id"><%= AccRec[i]._id %></span>
+                <span><%= AccRec[i].item %></span> |
+                <span>$<%= AccRec[i].amount%></span>
+                <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+              </li>
+            <% } %>
+            </ul>
+          </section>
+
+          <section class='left side'>
             <h3>Add a transaction</h3>
           <% if (user.local.email) { %>
-            <form action="/messages" method="POST">
+            <section>
+              <input onclick='checkAP()' type="radio" id="ap" name="accounts" value="ap">
+              <label onclick='checkAP()' for="ap">Accounts Payable</label><br>
+              <input onclick='checkAR()' type="radio" id="ar" name="accounts" value="ar">
+              <label onclick='checkAR()' for="ar">Accounts Receivable</label><br>
+            </section>
+
+            <form id='form' action="/AP" method="POST">
             <li>
               <input class="id" type="userID" value="<%= user._id %>" name="userID">
             </li>
@@ -49,8 +70,6 @@
               <input type="number" placeholder="amount" name="amount">
             </li>
             <li>
-              <input type="checkbox" placeholder="Star" name="star">
-            </li>
               <button type="submit">Submit</button>
             </li>
             </form>

@@ -25,7 +25,6 @@ module.exports = function(app, passport, db) {
   });
 
   // message board routes ===============================================================
-
   app.post('/messages', (req, res) => {
     db.collection('messages').save({
       userID: req.body.userID,
@@ -37,6 +36,21 @@ module.exports = function(app, passport, db) {
       res.redirect('/profile')
     })
   })
+
+  app.put('/messages', (req, res) => {
+    db.collection('messages').findOneAndUpdate({
+      _id: new mongodb.ObjectID(req.body.id)
+    }, {
+        $set: {
+          star: true
+        }
+      },(err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to database')
+      res.redirect('/profile')
+    })
+  })
+
 
   app.delete('/messages', (req, res) => {
     var mongodb = require('mongodb')

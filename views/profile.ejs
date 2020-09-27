@@ -12,32 +12,11 @@
 <div class="container">
 
     <div class="text-center">
-        <h1></span>Resillient Coders Transaction Tracker</h1>
+        <h1></span>Resilient Coders Transaction Tracker</h1>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
     <div class="row">
-
-        <!-- LOCAL INFORMATION -->
-        <!-- <div class="col-sm-6">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
-
-                <% if (user.local.email) { %>
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.local.email %><br>
-                        <strong>password</strong>: <%= user.local.password %>
-                    </p>
-
-                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
-                <% } else { %>
-                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
-                <% } %>
-
-            </div>
-        </div>
-        <div class="col-sm-6"> -->
 
           <% let money = messages.reduce((a,b)=>a+parseInt(b.amount),0) %>
           <h2>Running Total | <span class="red">$<%= money %></span></h2>
@@ -68,6 +47,9 @@
             </li>
             <li>
               <input type="number" placeholder="amount" name="amount">
+            </li>
+            <li>
+              <input type="checkbox" placeholder="Star" name="star">
             </li>
               <button type="submit">Submit</button>
             </li>

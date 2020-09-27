@@ -5,7 +5,7 @@ I created a financial transaction tracker that takes in items you bought and giv
 **Link to project:** Coming Soon!
 
 ![alt tag](https://i.imgur.com/RWtNe3f.png)
-![alt tag](https://i.imgur.com/ZWDm2MB.png)
+![alt tag](https://i.imgur.com/D41ijtJ.png)
 
 ## How It's Made:
 **Tech used:** HTML5, CSS3, JavaScript, Node.js, EJS, MongoDB
